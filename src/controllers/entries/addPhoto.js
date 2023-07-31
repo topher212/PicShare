@@ -2,7 +2,6 @@ const getDB = require("../../database/db");
 const savePhoto = require("../../service/savePhoto");
 const fs = require("fs/promises");
 const path = require("path");
-const createPhotosUsers = require("../../app");
 
 const addPhoto = async (req, res) => {
   try {
