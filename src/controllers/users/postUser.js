@@ -18,8 +18,8 @@ const postUser = async (req, res) => {
     }
 
     const [users] = await connect.query(
-      `INSERT INTO users (email, name, password, avatar) VALUES (?,?,SHA2(?,512),?)`,
-      [email, name, pwd, avatar]
+      `INSERT INTO users (email, name, password) VALUES (?,?,SHA2(?,512))`,
+      [email, name, pwd]
     );
 
     connect.release();
