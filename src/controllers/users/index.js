@@ -1,5 +1,5 @@
-const postUser = require('./postUser');
+const postUser = require("./postUser");
 
 module.exports = {
-    postUser
-}
+  postUser,
+};
