@@ -27,7 +27,12 @@ const postUser = async (req, res) => {
     res.status(200).send({
       status: "OK",
       message: "Usuario creado correctamente",
+      newUser: {
+        userName: name,
+        userEmail: email,
+      }
     });
+
   } catch (error) {
     console.log(error);
   }
