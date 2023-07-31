@@ -14,8 +14,8 @@ server.get('/', (req, res) => {
     res.send('<h3>Estoy aca</h3>');
 });
 
-// server.use(userRouter);
-// server.use(entryRouter);
+server.use(userRouter);
+//server.use(entryRouter);
 
 server.use((err, _req, res, _next) => {
     const status = err.status || 500;
