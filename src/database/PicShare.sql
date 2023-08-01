@@ -46,3 +46,11 @@ CREATE TABLE likes (
     FOREIGN KEY (entry_id) REFERENCES entries(id),
     UNIQUE (user_id, entry_id)
 );
+
+INSERT INTO users (email, name, password, role) VALUES ('lili@mail.com','lili',SHA2(12345,512), 'admin');
+
+INSERT INTO users (email, name, password, role) VALUES ('esteban@mail.com','esteban',SHA2(12345,512), 'admin');
+
+INSERT INTO users (email, name, password, role) VALUES ('david@mail.com','david',SHA2(12345,512), 'admin');
+
+INSERT INTO users (email, name, password, role) VALUES ('cristopher@mail.com','cristopher',SHA2(12345,512), 'admin');
