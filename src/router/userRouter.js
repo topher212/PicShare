@@ -6,9 +6,11 @@ const userExists = require('../middlewares/userExists');
 const isUser = require('../middlewares/isUser');
 const canEdit = require('../middlewares/canEdit');
 const validator = require('../middlewares/validator');
-const { postUser, deleteUser } = require("../controllers/users");
+const canDeleteUser = require('../middlewares/canDeleteUser');
+const { postUser, deleteUser, loginUser } = require("../controllers/users");
 
 router.post("/register", validator(), postUser);
-router.delete("/users/:idUser", isUser, canEdit, deleteUser);
+router.delete("/users/:idUser", isUser, canDeleteUser, deleteUser);
+router.post("/login", loginUser);
 
 module.exports = router;
