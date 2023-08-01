@@ -11,6 +11,8 @@ const userRouter = require("../src/router/userRouter");
 
 const entryRouter = require("../src/router/entryRouter");
 
+const seePhotoUsers = require("../src/controllers/entries/seePhotoUsers");
+
 server.use(express.urlencoded({ extended: false }));
 server.use(express.json());
 server.use(morgan("dev"));
@@ -20,9 +22,7 @@ const staticDir = path.join(__dirname, "uploads");
 server.use(express.static(staticDir));
 createStaticDir(staticDir);
 
-server.get("/", (req, res) => {
-  res.send("<h3>Estoy aca</h3>");
-});
+server.get("/", seePhotoUsers);
 
 server.use(userRouter);
 server.use(entryRouter);

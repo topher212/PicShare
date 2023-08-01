@@ -3,12 +3,11 @@ const savePhoto = require("../../service/savePhoto");
 const fs = require("fs/promises");
 const path = require("path");
 
-
 const addPhoto = async (req, res) => {
   try {
     const connect = await getDB();
     const { place, description, comment } = req.body;
-    const { id_User } = req.params;
+    const { idUser } = req.params;
     if (!description) {
       return res.status(400).send("Campo descripción es obligatorio");
     }
@@ -19,7 +18,7 @@ const addPhoto = async (req, res) => {
             INSERT INTO entries (place,description,user_id,comment)
             VALUES (?,?,?,?)
         `,
-      [place, description, id_User, comment]
+      [place, description, idUser, comment]
     );
     const { insertId } = result;
 
@@ -27,17 +26,17 @@ const addPhoto = async (req, res) => {
 
     const createFolderUser = async () => {
       try {
-        await fs.access(`${photoFolder}/${id_User}`);
-        //await fs.access(`${staticDir}/avatarUser/${id_User}`);
+        await fs.access(`${photoFolder}/${idUser}`);
+        //await fs.access(`${staticDir}/avatarUser/${idUser}`);
       } catch (error) {
-        //await fs.mkdir(`${staticDir}/avatarUser/${id_User}`);
-        await fs.mkdir(`${photoFolder}/${id_User}`);
+        //await fs.mkdir(`${staticDir}/avatarUser/${idUser}`);
+        await fs.mkdir(`${photoFolder}/${idUser}`);
       }
     };
 
     if (req.files && req.files.photo) {
       createFolderUser();
-      const photo = await savePhoto(req.files.photo, `/photos/${id_User}`);
+      const photo = await savePhoto(req.files.photo, `/photos/${idUser}`);
 
       await connect.query(
         `
