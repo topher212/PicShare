@@ -12,16 +12,10 @@ const isUser = require("../middlewares/isUser");
 // const canEdit = require("../middlewares/canEdit");
 
 //traemos las entries
-const { 
-    addPhoto, 
-    likeEntry,
-    deleteEntry 
-} = require("../controllers/entries");
+const { addPhoto, likeEntry, deleteEntry } = require("../controllers/entries");
 
-
-router.post("/entries/:id_user/photos", isUser, addPhoto);
-router.post("/entries/:id_entry/votes", isUser, entryExists, likeEntry);
+router.post("/entries/:idUser/photos", isUser, addPhoto);
+router.post("/entries/:idEntry/votes", isUser, entryExists, likeEntry);
 router.delete("/entries/:idEntry", deleteEntry);
-
 
 module.exports = router;
