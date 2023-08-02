@@ -22,6 +22,11 @@ const addAvatar = async (req, res) => {
       createFolderUser();
       const avatar = await saveAvatar(req.files.avatar, `/avatarUser/${idUser}`);
 
+      await connect.query(
+        `UPDATE users SET avatar = ? WHERE id = ?`,
+        [avatar, idUser]
+      );
+
       return res.status(200).send({
         status: "OK",
         message: "El avatar se cargó correctamente",
