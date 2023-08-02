@@ -6,8 +6,9 @@ const path = require("path");
 const addPhoto = async (req, res) => {
   try {
     const connect = await getDB();
-    const { place, description, comment } = req.body;
-    const { idUser } = req.params;
+    const { place, description } = req.body;
+    const idUser = req.userInfo.id;
+
     if (!description) {
       return res.status(400).send("Campo descripción es obligatorio");
     }
@@ -15,10 +16,10 @@ const addPhoto = async (req, res) => {
     //hacemos un post a una entrada
     const [result] = await connect.query(
       `
-            INSERT INTO entries (place,description,user_id,comment)
-            VALUES (?,?,?,?)
+            INSERT INTO entries (place,description,user_id)
+            VALUES (?,?,?)
         `,
-      [place, description, idUser, comment]
+      [place, description, idUser]
     );
     const { insertId } = result;
 

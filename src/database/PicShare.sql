@@ -1,6 +1,8 @@
 CREATE DATABASE IF NOT EXISTS PicShare;
 USE PicShare;
 
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS likes;
 DROP TABLE IF EXISTS photos;
 DROP TABLE IF EXISTS entries;
 DROP TABLE IF EXISTS users;
@@ -24,7 +26,6 @@ CREATE TABLE entries (
     date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     place VARCHAR(100),
     description VARCHAR(250) NOT NULL,
-    comment TEXT,
     user_id INT UNSIGNED NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
@@ -46,6 +47,19 @@ CREATE TABLE likes (
     FOREIGN KEY (entry_id) REFERENCES entries(id),
     UNIQUE (user_id, entry_id)
 );
+
+CREATE TABLE comments (
+	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    comment TEXT,
+    date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    edit_date DATETIME,
+	user_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    entry_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (entry_id) REFERENCES entries(id),
+    UNIQUE (user_id, entry_id)
+);
+
 
 INSERT INTO users (email, name, password, role) VALUES ('lili@mail.com','lili',SHA2(12345,512), 'admin');
 
