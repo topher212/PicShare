@@ -5,12 +5,12 @@ const seePhotoUsers = async (req, res) => {
     const connect = await getDB();
     const [users] = await connect.query(
       `
-                SELECT  u.name, u.email as userName, p.photo, 
-                p.date, e.description, e.place, e.id as idEntry
-                FROM users u
-                 JOIN entries e ON e.user_id=u.id
-                 JOIN photos p ON p.entry_id=e.id
-                ORDER BY p.date, u.name;
+      SELECT  u.name, u.email as userName, p.photo, 
+      p.date, e.description, e.place, e.id as idEntry
+      FROM users u
+       JOIN entries e ON e.user_id=u.id
+       JOIN photos p ON p.entry_id=e.id
+      ORDER BY p.date, u.name;
       `
     );
 

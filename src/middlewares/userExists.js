@@ -12,10 +12,11 @@ const userExists = async (req, res, next) => {
         );
 
         if (user.length === 0) {
-            res.status(404).send('No existe el usuario');
+            return res.status(404).send('No existe el usuario');
         };
 
         connect.release();
+
         next();
 
     } catch (error) {

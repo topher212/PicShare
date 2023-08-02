@@ -1,6 +1,6 @@
 const getDB = require('../database/db');
 
-const canEdit = async (req, res, next) => {
+const canEditEntry = async (req, res, next) => {
     try {
         const connect = await getDB();
         const { idEntry } = req.params;
@@ -13,6 +13,7 @@ const canEdit = async (req, res, next) => {
 
         connect.release();
 
+
         if (req.userInfo.id !== entry[0].user_id && req.userInfo.role !== 'admin') {
             return res.status(401).send('No tiene permisos para modificar esta publicación');
         };
@@ -24,4 +25,4 @@ const canEdit = async (req, res, next) => {
     };
 };
 
-module.exports = canEdit;
+module.exports = canEditEntry;

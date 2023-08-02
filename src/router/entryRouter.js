@@ -3,22 +3,34 @@ const express = require("express");
 //enrutador
 const router = express.Router();
 
-const entryExists = require("../middlewares/entryExists");
-
-//Middleware - necesita ser usuario logueado para algunas cosas
+//Middlewares
 const isUser = require("../middlewares/isUser");
 const userExists = require("../middlewares/userExists");
+const entryExists = require("../middlewares/entryExists");
+const commentExists = require("../middlewares/commentExists");
+const canEditEntry = require("../middlewares/canEditEntry");
+const canEditComment = require("../middlewares/canEditComment");
 
-// //middleware de editar entry
-// const canEdit = require("../middlewares/canEdit");
 
 //traemos las entries
-const { addPhoto, likeEntry, deleteEntry, searchPhotoDescr, addAvatar } = require("../controllers/entries");
+const { addPhoto,
+        likeEntry,
+        deleteEntry,
+        searchPhotoDescr,
+        addAvatar,
+        commentEntry,
+        editComment,
+        deleteComment        
+} = require("../controllers/entries");
 
-router.post("/entries/:idUser/photos", isUser, userExists, addPhoto);
-router.post("/entries/:idUser/avatar", isUser, userExists, addAvatar);
-router.post("/entries/:idEntry/votes", isUser, entryExists, likeEntry);
-router.delete("/entries/:idEntry", deleteEntry);
+
 router.get("/entries/photos/search?", searchPhotoDescr);
+router.post("/entries/:idUser/avatar", isUser, userExists, addAvatar);
+router.post("/entries/:idUser/photos", userExists, isUser, addPhoto);
+router.post("/entries/:idEntry/votes", userExists, isUser, entryExists, likeEntry);
+router.post("/entries/:idEntry/comment", userExists, isUser, entryExists, commentEntry);
+router.put("/entries/:idEntry/comment/:idComment", userExists, isUser, entryExists, commentExists, canEditComment, editComment)
+router.delete("/entries/:idEntry/comment/:idComment", userExists, isUser, entryExists, commentExists, canEditComment, deleteComment);
+router.delete("/entries/:idEntry", userExists, isUser, entryExists, canEditEntry, deleteEntry);
 
 module.exports = router;
