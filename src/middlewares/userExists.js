@@ -1,27 +1,27 @@
-const getDB = require('../database/db');
+const getDB = require("../database/db");
 
 const userExists = async (req, res, next) => {
-    try {
-        const connect = await getDB();
-        const { idUser } = req.params;
+  try {
+    const connect = await getDB();
+    const { idUser } = req.params;
 
-        const [user] = await connect.query(
-            `SELECT id
+    const [user] = await connect.query(
+      `SELECT id
              FROM users
-             WHERE id = ?`, [idUser]
-        );
+             WHERE id = ?`,
+      [idUser]
+    );
 
-        if (user.length === 0) {
-            return res.status(404).send('No existe el usuario');
-        };
+    if (user.length === 0) {
+      return res.status(404).send("No existe el usuario");
+    }
 
-        connect.release();
+    connect.release();
 
-        next();
-
-    } catch (error) {
-        console.log(error);
-    };
+    next();
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 module.exports = userExists;

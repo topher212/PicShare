@@ -56,8 +56,7 @@ CREATE TABLE comments (
 	user_id INT UNSIGNED NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
     entry_id INT UNSIGNED NOT NULL,
-    FOREIGN KEY (entry_id) REFERENCES entries(id),
-    UNIQUE (user_id, entry_id)
+    FOREIGN KEY (entry_id) REFERENCES entries(id)
 );
 
 
