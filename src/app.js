@@ -27,6 +27,12 @@ server.get("/", seePhotoUsers);
 server.use(userRouter);
 server.use(entryRouter);
 
+
+server.get('*', (_req, res) => {
+    res.status(404).send('Error 404: Página no encontrada')
+});
+
+
 server.use((err, _req, res, _next) => {
   const status = err.status || 500;
   const message = err.message || err;

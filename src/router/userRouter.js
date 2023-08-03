@@ -15,9 +15,9 @@ const {
   addAvatar,
 } = require("../controllers/users");
 
-router.post("/register", validator(), postUser);
+router.post("/register", validator, postUser);
 router.post("/login", loginUser);
-router.post("/users/avatar", isUser, addAvatar);
+router.post("/users/avatar", isUser, validator, addAvatar);
 router.get("/users/:idUser", userExists, seeUserProfile);
 router.delete("/users/:idUser", isUser, canDeleteUser, deleteUser);
 

@@ -19,6 +19,7 @@ const userExists = async (req, res, next) => {
     connect.release();
 
     next();
+    
   } catch (error) {
     console.log(error);
   }
