@@ -2,7 +2,7 @@ const getDB = require("../../database/db");
 
 const postUser = async (req, res) => {
   try {
-    const { email, name, pwd, avatar } = req.body;
+    const { email, name, pwd} = req.body;
     const connect = await getDB();
 
     const [userExist] = await connect.query(

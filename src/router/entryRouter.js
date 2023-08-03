@@ -9,6 +9,8 @@ const entryExists = require("../middlewares/entryExists");
 const commentExists = require("../middlewares/commentExists");
 const canEditEntry = require("../middlewares/canEditEntry");
 const canEditComment = require("../middlewares/canEditComment");
+const validator = require("../middlewares/validator");
+
 
 //traemos las entries
 const {
@@ -16,37 +18,17 @@ const {
   likeEntry,
   deleteEntry,
   searchPhotoDescr,
-  commentEntry,
+  createComment,
   editComment,
   deleteComment,
 } = require("../controllers/entries");
 
 router.get("/entries/photos/search?", searchPhotoDescr);
-router.post("/entries/photos", isUser, addPhoto);
+router.post("/entries/photos", isUser, validator, addPhoto);
 router.post("/entries/:idEntry/votes", isUser, entryExists, likeEntry);
-router.post("/entries/:idEntry/comment", isUser, entryExists, commentEntry);
-router.put(
-  "/entries/:idEntry/comment/:idComment",
-  isUser,
-  entryExists,
-  commentExists,
-  canEditComment,
-  editComment
-);
-router.delete(
-  "/entries/:idEntry/comment/:idComment",
-  isUser,
-  entryExists,
-  commentExists,
-  canEditComment,
-  deleteComment
-);
-router.delete(
-  "/entries/:idEntry",
-  isUser,
-  entryExists,
-  canEditEntry,
-  deleteEntry
-);
+router.post("/entries/:idEntry/comment", isUser, entryExists, createComment);
+router.put("/entries/:idEntry/comment/:idComment", isUser, entryExists, commentExists, canEditComment, editComment);
+router.delete("/entries/:idEntry/comment/:idComment", isUser, entryExists, commentExists, canEditComment, deleteComment);
+router.delete("/entries/:idEntry", isUser, entryExists, canEditEntry, deleteEntry);
 
 module.exports = router;

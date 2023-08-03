@@ -1,6 +1,6 @@
 const getDB = require("../../database/db");
 
-const commentEntry = async (req, res) => {
+const createComment = async (req, res) => {
   try {
     const connect = await getDB();
     const { idEntry } = req.params;
@@ -32,4 +32,4 @@ const commentEntry = async (req, res) => {
   }
 };
 
-module.exports = commentEntry;
+module.exports = createComment;
