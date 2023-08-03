@@ -6,7 +6,7 @@ const path = require("path");
 const addAvatar = async (req, res) => {
   try {
     const connect = await getDB();
-    const { idUser } = req.params;
+    const idUser = req.userInfo.id;
 
     const avatarFolder = path.resolve(__dirname, "../../uploads/avatarUser");
 
@@ -20,12 +20,15 @@ const addAvatar = async (req, res) => {
 
     if (req.files && req.files.avatar) {
       createFolderUser();
-      const avatar = await saveAvatar(req.files.avatar, `/avatarUser/${idUser}`);
-
-      await connect.query(
-        `UPDATE users SET avatar = ? WHERE id = ?`,
-        [avatar, idUser]
+      const avatar = await saveAvatar(
+        req.files.avatar,
+        `/avatarUser/${idUser}`
       );
+
+      await connect.query(`UPDATE users SET avatar = ? WHERE id = ?`, [
+        avatar,
+        idUser,
+      ]);
 
       return res.status(200).send({
         status: "OK",
