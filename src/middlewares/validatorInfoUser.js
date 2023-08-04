@@ -2,7 +2,10 @@ const hapiJoi = require("@hapi/joi");
 
 const validatorInfoUser = (req, res, next) => {
   try {
-    if (req.body.email && req.body.pwd && req.body.name) {
+    if (
+      (req.body.email && req.body.pwd && req.body.name) ||
+      (req.body.email && req.body.pwd && req.body.name && req.body.pwdNew)
+    ) {
       const userData = req.body;
 
       const schema = hapiJoi.object().keys({
@@ -27,6 +30,14 @@ const validatorInfoUser = (req, res, next) => {
           .max(15)
           .message("El nombre debe tener máximo 15 caracteres")
           .required(),
+        pwdNew: hapiJoi
+          .string()
+          .min(6)
+          .message("La nueva contraseña debe tener mínimo 6 caracteres")
+          .max(20)
+          .message("La nueva contraseña debe tener máximo 20 caracteres")
+          .alphanum()
+          .message("Permite alfa"),
       });
 
       const validation = schema.validate(userData);
@@ -48,6 +59,7 @@ const validatorInfoUser = (req, res, next) => {
         message: "Campo nombre no permite números",
       });
     }
+
     next();
   } catch (error) {
     console.log(error);
