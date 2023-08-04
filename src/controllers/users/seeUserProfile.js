@@ -24,31 +24,42 @@ const seeUserProfile = async (req, res) => {
       [idUser]
     );
 
-    const PhotosWithLikes = photos.map(async (user) => {
-      const [total] = await connect.query(
+    const photosWithLikesAndComments = photos.map(async (photo) => {
+      const [totalLikes] = await connect.query(
         `
-      SELECT  COUNT(*) as likes, e.id as idEntry
-      FROM entries e
-      JOIN likes l ON l.entry_id = e.id
-      WHERE entry_id=?
-    `,
-        [user.idEntry]
+        SELECT COUNT(*) as likes, e.id as idEntry
+        FROM entries e
+        JOIN likes l ON l.entry_id = e.id
+        WHERE entry_id=?
+        `,
+        [photo.idEntry]
       );
-      if (user.idEntry === total[0].idEntry) {
-        user["likes"] = total[0].likes;
-      } else {
-        user["likes"] = 0;
+      
+      photo["likes"] = totalLikes[0].likes;
+
+      const [comments] = await connect.query(
+        `
+        SELECT comment, user_id, date, edit_date
+        FROM comments
+        WHERE entry_id=?
+        `,
+        [photo.idEntry]
+      );
+      photo["comments"] = comments;
+
+      if (!photo["comments"].length) {
+        photo["comments"] = "No hay comentarios en esta publicación";
       }
     });
 
-    Promise.all(PhotosWithLikes).then(async () => {
-      await res.status(200).send({
-        status: "OK",
-        data: {
-          user: user[0],
-          photos: photos,
-        },
-      });
+    await Promise.all(photosWithLikesAndComments);
+
+    await res.status(200).send({
+      status: "OK",
+      data: {
+        user: user[0],
+        photos: photos,
+      },
     });
 
     connect.release();
