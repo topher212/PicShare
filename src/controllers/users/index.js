@@ -11,5 +11,5 @@ module.exports = {
   loginUser,
   addNewAvatar,
   seeUserProfile,
-  editUser
+  editUser,
 };

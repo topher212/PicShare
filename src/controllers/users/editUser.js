@@ -1,73 +1,94 @@
 const getDB = require("../../database/db");
 
 const editUser = async (req, res) => {
-    try {
-        const idUser = req.userInfo.id;
-        const { email, name, pwd, newPwd} = req.body;
-        
-        const connect = await getDB();
-        const [ pass ] = await connect.query(
-            `
-            SELECT SHA2(password,512) AS password
-            FROM users
-            WHERE id = ?
-            `,
-            [idUser]
-        )
+  try {
+    const idUser = req.userInfo.id;
+    const { email, name, pwd, pwdNew } = req.body;
 
-        if(pwd === pass[0].password) {
-            if(email) {
-                connect.query(
-                `
-                UPDATE users SET email = ?
-                WHERE id = ?
-                `,
-                [email, idUser])
-              };
-          
-              if(name) {
-                connect.query(
-                `
-                UPDATE users SET name = ?
-                WHERE id = ?
-                `,
-                [name, idUser])
-              };
-        }
+    const connect = await getDB();
+    const [user] = await connect.query(
+      `
+      SELECT id, email, name FROM users WHERE id=?
+      `,
+      [idUser]
+    );
 
-        if(newPwd && newPwd !== pwd && pwd === pass[0].password)  {
-            if(newPwd) {
-                connect.query(
-                `
-                UPDATE users SET password = SHA2(?,512)
-                WHERE id = ?
-                `,
-                [newPwd, idUser])
-              };
-        }
+    const [oldPwd] = await connect.query(
+      `
+      SELECT id FROM users 
+      WHERE id=? AND password=SHA2(?,512)
+      `,
+      [idUser, pwd]
+    );
+    console.log(oldPwd);
+    if (oldPwd.length === 0) {
+      console.log("soy oldpwd");
+      return res
+        .status(401)
+        .send({ message: "No coincide la contraseña con la actual" });
+    }
+    console.log("entro aca");
 
-        if(pwd !== pass[0].password) {
-            return res.send({
-                status: "ERROR",
-                message: "Contraseña incorrecta. Vuelve a introducirla."
-            })
-        }
-          connect.release();
-      
-          res.status(200).send({
-            status: "OK",
-            message: "Usuario modificado correctamente",
-            newUser: {
-              userName: name,
-              userEmail: email,
-              userPassword: newPwd,
-            }
-            
-          });
-      
-        } catch (error) {
-          console.log(error);
-        }
-      };
+    if (email && email !== user[0].email) {
+      const [existingEmail] = await connect.query(
+        `
+        SELECT id
+        FROM users
+        WHERE email=?
+        `,
+        [email]
+      );
+      if (existingEmail.length > 0) {
+        return res.status(409).send({
+          status: "ERROR",
+          message:
+            "Ya existe un usuario registrado con ese email. Usa otro email",
+        });
+      }
+      await connect.query(
+        `
+        UPDATE users
+        SET email = ?, name=?, lastAuthUpdate = ?
+        WHERE id = ?
+        `,
+        [email, name, new Date(), idUser]
+      );
+    }
+    if (email && email === user[0].email) {
+      await connect.query(
+        `
+        UPDATE users
+        SET name=?
+        WHERE id = ?
+        `,
+        [name, idUser]
+      );
+    }
+
+    if (pwdNew) {
+      await connect.query(
+        `
+        UPDATE users 
+        SET password = SHA2(?,512), lastAuthUpdate=?
+        WHERE id=?
+        `,
+        [pwdNew, new Date(), idUser]
+      );
+    }
+
+    connect.release();
+
+    return res.status(200).send({
+      status: "OK",
+      message: "Usuario modificado correctamente",
+      newUser: {
+        name: name,
+        email: email,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 module.exports = editUser;
