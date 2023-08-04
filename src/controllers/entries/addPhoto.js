@@ -10,7 +10,9 @@ const addPhoto = async (req, res) => {
     const idUser = req.userInfo.id;
 
     if (!description) {
-      return res.status(400).send("Campo descripción es obligatorio");
+      return res
+        .status(400)
+        .send({ status: "Error", message: "Campo descripción es obligatorio" });
     }
 
     //hacemos un post a una entrada
@@ -28,9 +30,7 @@ const addPhoto = async (req, res) => {
     const createFolderUser = async () => {
       try {
         await fs.access(`${photoFolder}/${idUser}`);
-        //await fs.access(`${staticDir}/avatarUser/${idUser}`);
       } catch (error) {
-        //await fs.mkdir(`${staticDir}/avatarUser/${idUser}`);
         await fs.mkdir(`${photoFolder}/${idUser}`);
       }
     };
@@ -50,8 +50,6 @@ const addPhoto = async (req, res) => {
         status: "OK",
         message: "La imagen se cargó correctamente",
       });
-    } else {
-      return res.status(409).send("El envío de la imagen es obligatorio");
     }
   } catch (error) {
     console.log(error);
