@@ -34,7 +34,7 @@ const isUser = async (req, res, next) => {
         };
 
         connect.release();
-        
+
         // Añadimos la info del token a la request
         req.userInfo = tokenInfo;
 
