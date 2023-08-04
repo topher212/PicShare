@@ -6,18 +6,19 @@ const userExists = require("../middlewares/userExists");
 const isUser = require("../middlewares/isUser");
 const validator = require("../middlewares/validator");
 const canDeleteUser = require("../middlewares/canDeleteUser");
+const avatarExists = require("../middlewares/avatarExists");
 
 const {
   postUser,
   deleteUser,
   loginUser,
   seeUserProfile,
-  addAvatar,
+  addAndChangeAvatar,
 } = require("../controllers/users");
 
 router.post("/register", validator, postUser);
 router.post("/login", loginUser);
-router.post("/users/avatar", isUser, validator, addAvatar);
+router.post("/users/avatar", isUser, validator, avatarExists, addAndChangeAvatar);
 router.get("/users/:idUser", userExists, seeUserProfile);
 router.delete("/users/:idUser", isUser, canDeleteUser, deleteUser);
 

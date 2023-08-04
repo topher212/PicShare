@@ -41,14 +41,21 @@ const searchPhotoDescr = async (req, res) => {
     `,
         [user.idEntry]
       );
-      if (user.idEntry === total[0].idEntry) {
-        user["likes"] = total[0].likes;
-      } else {
-        user["likes"] = 0;
+      const [comments] = await connect.query(
+        `SELECT comment, user_id, date, edit_date
+        FROM comments
+        WHERE entry_id=?
+        `,
+        [user.idEntry]
+      );
+      user["comments"] = comments;
+
+      if (!user["comments"].length) {
+        user["comments"] = "No hay comentarios en esta publicación";
       }
     });
 
-    Promise.all(photoPromise).then(async () => {
+   await Promise.all(photoPromise).then(async () => {
       await res.status(200).send({
         status: "Ok",
         message: "Fotos encontradas con éxito.",

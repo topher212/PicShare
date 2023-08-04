@@ -37,8 +37,8 @@ const seePhotoUsers = async (req, res) => {
       const [comments] = await connect.query(
         `SELECT comment, user_id, date, edit_date
         FROM comments
-        WHERE entry_id =?`
-        ,
+        WHERE entry_id=?
+        `,
         [user.idEntry]
       );
       user["comments"] = comments;
