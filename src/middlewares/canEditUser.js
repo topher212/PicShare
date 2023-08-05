@@ -22,7 +22,7 @@ const canEditUser = async (req, res, next) => {
     next();
   } catch (error) {
     console.log(error);
-    res.status(500).send({
+    return res.status(500).send({
       status: "ERROR",
       message: "Error en el servidor",
     });
