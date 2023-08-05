@@ -53,10 +53,10 @@ const validatorInfoUser = (req, res, next) => {
       return res.send({ status: "Error", message: "Me faltan campos" });
     }
 
-    if (parseInt(req.body.name) || /\d/.test(req.body.name)) {
+    if (!/^[A-Za-z\s]+$/.test(req.body.name)) {
       return res.send({
         status: "Error",
-        message: "Campo nombre no permite números",
+        message: "Campo nombre no permite números ni caracteres especiales.",
       });
     }
 
