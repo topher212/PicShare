@@ -52,7 +52,7 @@ const addPhoto = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    ext(error);
   }
 };
 module.exports = addPhoto;
