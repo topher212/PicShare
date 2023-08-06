@@ -2,7 +2,7 @@ const getDB = require("../../database/db");
 const fs = require("fs/promises");
 const path = require("path");
 
-const deleteEntry = async (req, res) => {
+const deleteEntry = async (req, res, next) => {
   try {
     const connect = await getDB();
     const { idEntry } = req.params;

@@ -1,6 +1,6 @@
 const getDB = require("../../database/db");
 
-const seePhotoUsers = async (req, res) => {
+const seePhotoUsers = async (req, res, next) => {
   try {
     const connect = await getDB();
     const [users] = await connect.query(

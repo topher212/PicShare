@@ -2,7 +2,7 @@ const getDB = require("../../database/db");
 const fs = require("fs/promises");
 const path = require("path");
 
-const searchPhotoDescr = async (req, res) => {
+const searchPhotoDescr = async (req, res, next) => {
   const { description } = req.query;
 
   if (!description) {

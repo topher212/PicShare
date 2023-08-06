@@ -1,6 +1,6 @@
 const getDB = require("../../database/db");
 
-const editUser = async (req, res) => {
+const editUser = async (req, res, next) => {
   try {
     const idUser = req.userInfo.id;
     const { email, name, pwd, pwdNew } = req.body;

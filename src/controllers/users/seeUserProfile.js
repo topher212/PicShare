@@ -1,6 +1,6 @@
 const getDB = require("../../database/db");
 
-const seeUserProfile = async (req, res) => {
+const seeUserProfile = async (req, res, next) => {
   try {
     const { idUser } = req.params;
     const connect = await getDB();

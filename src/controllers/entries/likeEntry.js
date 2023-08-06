@@ -1,6 +1,6 @@
 const getDB = require('../../database/db');
 
-const likeEntry = async (req, res) => {
+const likeEntry = async (req, res, next) => {
     try {
         const connect = await getDB();
 
@@ -58,7 +58,7 @@ const likeEntry = async (req, res) => {
         });
 
     } catch (error) {
-        ext(error);
+        next(error);
     };
 };
 

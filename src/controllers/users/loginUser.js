@@ -1,7 +1,7 @@
 const getDB = require("../../database/db");
 const jwt = require("jsonwebtoken");
 
-const loginUser = async (req, res) => {
+const loginUser = async (req, res, next) => {
   try {
     const connect = await getDB();
 

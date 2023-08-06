@@ -3,7 +3,7 @@ const savePhoto = require("../../service/savePhoto");
 const fs = require("fs/promises");
 const path = require("path");
 
-const addPhoto = async (req, res) => {
+const addPhoto = async (req, res, next) => {
   try {
     const connect = await getDB();
     const { place, description } = req.body;
@@ -52,7 +52,7 @@ const addPhoto = async (req, res) => {
       });
     }
   } catch (error) {
-    ext(error);
+    next(error);
   }
 };
 module.exports = addPhoto;
