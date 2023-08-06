@@ -7,7 +7,7 @@ const deleteUser = async (req, res, next) => {
 
     await connect.query(
       `UPDATE users
-             SET password ="[borrado]", name= "[borrado]", avatar = null, active = 0, deleted = 1, lastAuthUpdate = ?
+             SET password ="[borrado]", name= "[borrado]", active = 0, deleted = 1, lastAuthUpdate = ?
              WHERE id = ?`,
       [new Date(), idUser]
     );
