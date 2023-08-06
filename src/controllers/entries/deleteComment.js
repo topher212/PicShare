@@ -1,6 +1,6 @@
 const getDB = require('../../database/db');
 
-const deleteComment = async (req, res) => {
+const deleteComment = async (req, res, next) => {
     try {
         const connect = await getDB();
 
@@ -19,7 +19,7 @@ const deleteComment = async (req, res) => {
         });
 
     } catch (error) {
-        ext(error);
+        next(error);
     }
 };
 

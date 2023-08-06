@@ -1,6 +1,6 @@
 const getDB = require("../../database/db");
 
-const deleteUser = async (req, res) => {
+const deleteUser = async (req, res, next) => {
   try {
     const connect = await getDB();
     const { idUser } = req.params;

@@ -1,6 +1,6 @@
 const getDB = require("../../database/db");
 
-const postUser = async (req, res) => {
+const postUser = async (req, res, next) => {
   try {
     const { email, name, pwd } = req.body;
     const connect = await getDB();

@@ -1,6 +1,6 @@
 const getDB = require('../../database/db');
 
-const editComment = async (req, res) => {
+const editComment = async (req, res, next) => {
     try {
         const connect = await getDB();
 
@@ -21,7 +21,7 @@ const editComment = async (req, res) => {
         });
 
     } catch (error) {
-        ext(error);
+        next(error);
     }
 };
 

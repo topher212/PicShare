@@ -3,7 +3,7 @@ const saveAvatar = require("../../service/saveAvatar");
 const fs = require("fs/promises");
 const path = require("path");
 
-const addAndChangeAvatar = async (req, res) => {
+const addAndChangeAvatar = async (req, res, next) => {
   try {
     const connect = await getDB();
     const idUser = req.userInfo.id;
