@@ -58,12 +58,14 @@ const validatorFiles = (req, res, next) => {
       }
     }
     if (!req.files) {
-      return res.send({ status: "Error", message: "Me falta el archivo" });
+      return res
+        .status(409)
+        .send({ status: 409, message: "Me falta el archivo" });
     }
 
     next();
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 

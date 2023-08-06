@@ -1,5 +1,4 @@
 const getDB = require("../../database/db");
-const deletePhotoDir = require("../../service/deletePhotos");
 const fs = require("fs/promises");
 const path = require("path");
 
@@ -35,7 +34,6 @@ const deleteEntry = async (req, res) => {
     // eliminar las fotos de la carpeta del usuario
 
     const photoToDelete = path.resolve(__dirname, "../../uploads/photos");
-    console.log(photoToDelete);
     await fs.unlink(`${photoToDelete}/${idUser[0].id}/${photos[0].photo}`);
 
     // borrar posibles votos que tenga la publicación
@@ -61,7 +59,7 @@ const deleteEntry = async (req, res) => {
       },
     ]);
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 

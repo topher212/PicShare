@@ -23,7 +23,10 @@ const editUser = async (req, res) => {
     if (oldPwd.length === 0) {
       return res
         .status(401)
-        .send({ message: "No coincide la contraseña con la actual" });
+        .send({
+          status: 401,
+          message: "No coincide la contraseña con la actual",
+        });
     }
 
     if (email && email !== user[0].email) {
@@ -84,7 +87,7 @@ const editUser = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 

@@ -1,10 +1,9 @@
 const path = require("path");
-const fs = require("fs/promises");
 const sharp = require("sharp");
 const uuid = require("uuid");
 
 const saveAvatar = async (dataAvatar, dir) => {
-  const img = sharp(dataAvatar.data).resize(200); 
+  const img = sharp(dataAvatar.data).resize(200);
 
   const avatarNameUniq = `${uuid.v4()}_${dataAvatar.name}`;
 

@@ -30,11 +30,10 @@ const postUser = async (req, res) => {
       newUser: {
         userName: name,
         userEmail: email,
-      }
+      },
     });
-
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 

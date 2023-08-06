@@ -16,16 +16,15 @@ const canEditUser = async (req, res, next) => {
     if (req.userInfo.id !== user[0].id) {
       return res
         .status(401)
-        .send("No tienes permisos para modificar este comentario");
+        .send({
+          status: 401,
+          message: "No tienes permisos para modificar este usuario",
+        });
     }
 
     next();
   } catch (error) {
-    console.log(error);
-    return res.status(500).send({
-      status: "ERROR",
-      message: "Error en el servidor",
-    });
+    next(error);
   }
 };
 

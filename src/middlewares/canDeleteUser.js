@@ -1,27 +1,30 @@
-const getDB = require('../database/db');
+const getDB = require("../database/db");
 
 const canDeleteUser = async (req, res, next) => {
-    try {
-        const connect = await getDB();
-        const { idUser } = req.params;
+  try {
+    const connect = await getDB();
+    const { idUser } = req.params;
 
-        const [user] = await connect.query(
-            `SELECT id
+    const [user] = await connect.query(
+      `SELECT id
              FROM users
-             WHERE id = ?`, [idUser]
-        );
+             WHERE id = ?`,
+      [idUser]
+    );
 
-        connect.release();
+    connect.release();
 
-        if (req.userInfo.id !== user[0].id && req.userInfo.role !== 'admin') {
-            return res.status(401).send('No tiene permisos para eliminar este usuario');
-        };
+    if (req.userInfo.id !== user[0].id && req.userInfo.role !== "admin") {
+      return res.status(401).send({
+        status: 401,
+        message: "No tiene permisos para eliminar este usuario",
+      });
+    }
 
-        next();
-
-    } catch (error) {
-        console.log(error);
-    };
+    next();
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports = canDeleteUser;

@@ -1,28 +1,32 @@
-const getDB = require('../database/db');
+const getDB = require("../database/db");
 
 const canEditEntry = async (req, res, next) => {
-    try {
-        const connect = await getDB();
-        const { idEntry } = req.params;
+  try {
+    const connect = await getDB();
+    const { idEntry } = req.params;
 
-        const [entry] = await connect.query(
-            `SELECT user_id
+    const [entry] = await connect.query(
+      `SELECT user_id
              FROM entries
-             WHERE id = ?`, [idEntry]
-        );
+             WHERE id = ?`,
+      [idEntry]
+    );
 
-        connect.release();
+    connect.release();
 
+    if (req.userInfo.id !== entry[0].user_id && req.userInfo.role !== "admin") {
+      return res
+        .status(401)
+        .send({
+          status: 401,
+          message: "No tiene permisos para modificar esta publicación",
+        });
+    }
 
-        if (req.userInfo.id !== entry[0].user_id && req.userInfo.role !== 'admin') {
-            return res.status(401).send('No tiene permisos para modificar esta publicación');
-        };
-
-        next();
-
-    } catch (error) {
-        console.log(error);
-    };
+    next();
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports = canEditEntry;
