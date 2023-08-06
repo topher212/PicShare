@@ -64,8 +64,7 @@ const searchPhotoDescr = async (req, res) => {
       });
     });
   } catch (error) {
-    console.error("Error al buscar las fotos:", error);
-    return res.status(500).send({ error: "Error al buscar las fotos." });
+    next(error);
   }
 };
 
