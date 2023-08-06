@@ -12,12 +12,11 @@ const addAndChangeAvatar = async (req, res) => {
 
     const createFolderUser = async () => {
       try {
-        console.log(`${avatarFolder}/${idUser}`)
+        console.log(`${avatarFolder}/${idUser}`);
         await fs.access(`${avatarFolder}/${idUser}`);
-
       } catch (error) {
         await fs.mkdir(`${avatarFolder}/${idUser}`);
-      };
+      }
     };
 
     if (req.files && req.files.avatar) {
@@ -46,16 +45,17 @@ const addAndChangeAvatar = async (req, res) => {
           message: "El avatar se actualizó correctamente",
           avatar,
         });
-      };
-
+      }
     } else {
-      return res.status(409).send("El envío del avatar es obligatorio");
-    };
-
+      return res
+        .status(409)
+        .send({ status: 409, message: "El envío del avatar es obligatorio" });
+    }
   } catch (error) {
-    console.log(error);
-    return res.status(500).send("Error al manejar el avatar");
-  };
+    next(error);
+
+    //return res.status(500).send("Error al manejar el avatar");
+  }
 };
 
 module.exports = addAndChangeAvatar;

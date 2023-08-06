@@ -4,7 +4,6 @@ const seePhotoUsers = async (req, res) => {
   try {
     const connect = await getDB();
     const [users] = await connect.query(
-
       `SELECT  u.name, u.email as userName, p.photo, 
       p.date, e.description, e.place, e.id as idEntry
       FROM users u
@@ -28,8 +27,7 @@ const seePhotoUsers = async (req, res) => {
         `SELECT COUNT(*) as likes, e.id as idEntry
         FROM entries e
         JOIN likes l ON l.entry_id = e.id
-        WHERE entry_id =?`
-        ,
+        WHERE entry_id =?`,
         [user.idEntry]
       );
       user["likes"] = totalLikes[0].likes;
@@ -56,13 +54,8 @@ const seePhotoUsers = async (req, res) => {
     });
 
     connect.release();
-
   } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      status: "Error",
-      message: "Internal Server Error",
-    });
+    next(error);
   }
 };
 

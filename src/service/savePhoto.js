@@ -1,5 +1,4 @@
 const path = require("path");
-const fs = require("fs/promises");
 const sharp = require("sharp"); //para imagenes
 
 const uuid = require("uuid");

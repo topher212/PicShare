@@ -8,7 +8,7 @@ const isUser = async (req, res, next) => {
 
     if (!authorization) {
       return res.status(401).send({
-        status: "Error",
+        status: 401,
         message: "Falta header de autorizacion:  authorization",
       });
     }
@@ -18,9 +18,7 @@ const isUser = async (req, res, next) => {
     try {
       tokenInfo = jwt.verify(authorization, process.env.SECRET_TOKEN);
     } catch (error) {
-      return res
-        .status(401)
-        .send({ status: "Error", message: "Token no válido" });
+      return res.status(401).send({ status: 401, message: "Token no válido" });
     }
 
     // Comprobar que la fecha del token sea válida respecto a lastAuthUpdate
@@ -36,7 +34,7 @@ const isUser = async (req, res, next) => {
 
     if (timeStampCreateToken < lastAuthUpdate) {
       return res.status(401).send({
-        status: "Error: Token caducado",
+        status: "401: Token caducado",
         message: "Inicia sesión para continuar",
       });
     }
@@ -47,11 +45,7 @@ const isUser = async (req, res, next) => {
     req.userInfo = tokenInfo;
     next();
   } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      status: "ERROR",
-      message: error,
-    });
+    next(error);
   }
 };
 

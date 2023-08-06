@@ -34,7 +34,7 @@ const seeUserProfile = async (req, res) => {
         `,
         [photo.idEntry]
       );
-      
+
       photo["likes"] = totalLikes[0].likes;
 
       const [comments] = await connect.query(
@@ -64,11 +64,7 @@ const seeUserProfile = async (req, res) => {
 
     connect.release();
   } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      status: "Error",
-      message: "Internal Server Error",
-    });
+    next(error);
   }
 };
 
