@@ -16,7 +16,6 @@ CREATE TABLE users (
     avatar VARCHAR(100),
     active BOOLEAN DEFAULT false,
     role ENUM("admin", "normal") DEFAULT "normal" NOT NULL,
-    regCode CHAR(36),
     deleted BOOLEAN DEFAULT false,
     lastAuthUpdate DATETIME
 );

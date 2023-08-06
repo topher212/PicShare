@@ -7,7 +7,9 @@ const loginUser = async (req, res) => {
 
     const { email, pwd } = req.body;
 
-    if (!email || !pwd) return res.status(400).send("Faltan datos");
+    if (!email || !pwd) {
+      return res.status(400).send({ status: "Error", message: "Faltan datos" });
+    }
 
     //comprobar que el usuario exista y que la pwd sea correcta y corresponda a ese mail
     const [user] = await connect.query(
@@ -38,11 +40,20 @@ const loginUser = async (req, res) => {
     //un vencimiento 1d, 30m, 60m 10d 60d
     const token = jwt.sign(info, process.env.SECRET_TOKEN, { expiresIn: "1d" });
 
+    await connect.query(
+      `
+      UPDATE users 
+      SET active = 1 
+      WHERE id=?
+      `,
+      [user[0].id]
+    );
+
     connect.release();
 
     res.status(200).send({
       status: "OK",
-      message: "Login",
+      message: "Login correcto",
       data: {
         token,
       },

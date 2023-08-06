@@ -20,14 +20,11 @@ const editUser = async (req, res) => {
       `,
       [idUser, pwd]
     );
-    console.log(oldPwd);
     if (oldPwd.length === 0) {
-      console.log("soy oldpwd");
       return res
         .status(401)
         .send({ message: "No coincide la contraseña con la actual" });
     }
-    console.log("entro aca");
 
     if (email && email !== user[0].email) {
       const [existingEmail] = await connect.query(
