@@ -2,12 +2,12 @@ const getDB = require("../../database/db");
 
 const postUser = async (req, res, next) => {
   try {
-    const { email, name, pwd } = req.body;
+    const { email, name, username, pwd } = req.body;
     const connect = await getDB();
 
     const [userExist] = await connect.query(
-      `SELECT id FROM users WHERE email=?`,
-      [email]
+      `SELECT id FROM users WHERE email=? OR username = ?`,
+      [email, username]
     );
 
     if (userExist.length > 0) {
@@ -26,7 +26,7 @@ const postUser = async (req, res, next) => {
         );
         return res.status(200).send({
           status: "OK",
-          message: "Tu usuario ha sido recuperado",
+          message: "Tu usuario ha sido recuperado con éxito",
         });
       }
       connect.release();
@@ -37,8 +37,8 @@ const postUser = async (req, res, next) => {
     }
 
     const [users] = await connect.query(
-      `INSERT INTO users (email, name, password) VALUES (?,?,SHA2(?,512))`,
-      [email, name, pwd]
+      `INSERT INTO users (email, username, name, password) VALUES (?,?,?,SHA2(?,512))`,
+      [email, username, name, pwd]
     );
 
     connect.release();
@@ -47,8 +47,9 @@ const postUser = async (req, res, next) => {
       status: "OK",
       message: "Usuario creado correctamente",
       newUser: {
-        userName: name,
-        userEmail: email,
+        name: name,
+        email: email,
+        username: username,
       },
     });
   } catch (error) {

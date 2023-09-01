@@ -3,8 +3,16 @@ const hapiJoi = require("@hapi/joi");
 const validatorInfoUser = (req, res, next) => {
   try {
     if (
-      (req.body.email && req.body.pwd && req.body.name) ||
-      (req.body.email && req.body.pwd && req.body.name && req.body.pwdNew)
+      (req.body.email &&
+        req.body.pwd &&
+        req.body.repeatpwd &&
+        req.body.name &&
+        req.body.username) ||
+      (req.body.email &&
+        req.body.pwd &&
+        req.body.repeatpwd &&
+        req.body.name &&
+        req.body.pwdNew)
     ) {
       const userData = req.body;
 
@@ -23,6 +31,7 @@ const validatorInfoUser = (req, res, next) => {
           .alphanum()
           .message("Permite alfa")
           .required(),
+        repeatpwd: hapiJoi.string(),
         name: hapiJoi
           .string()
           .min(5)
@@ -30,6 +39,7 @@ const validatorInfoUser = (req, res, next) => {
           .max(15)
           .message("El nombre debe tener máximo 15 caracteres")
           .required(),
+        username: hapiJoi.string().required(),
         pwdNew: hapiJoi
           .string()
           .min(6)
@@ -49,8 +59,43 @@ const validatorInfoUser = (req, res, next) => {
       }
     }
 
-    if (!req.body.email || !req.body.pwd || !req.body.name) {
+    if (
+      !req.body.email ||
+      !req.body.pwd ||
+      !req.body.name ||
+      !req.body.username
+    ) {
       return res.send({ status: "Error", message: "Me faltan campos" });
+    }
+
+    if (req.body.pwdNew) {
+      if (req.body.repeatpwd && req.body.repeatpwd !== req.body.pwdNew) {
+        return res.send({
+          status: "Error",
+          message: "Las contraseñas deben coincidir.",
+        });
+      }
+      if (!req.body.repeatpwd) {
+        return res.send({
+          status: "Error",
+          message: "Debes repetir la contraseña.",
+        });
+      }
+    }
+
+    if (!req.body.pwdNew) {
+      if (req.body.repeatpwd && req.body.repeatpwd !== req.body.pwd) {
+        return res.send({
+          status: "Error",
+          message: "Las contraseñas deben ser iguales.",
+        });
+      }
+      if (!req.body.repeatpwd) {
+        return res.send({
+          status: "Error",
+          message: "Debes repetir la contraseña.",
+        });
+      }
     }
 
     if (!/^[A-Za-z\s]+$/.test(req.body.name)) {

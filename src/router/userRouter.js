@@ -17,8 +17,10 @@ const {
   seeUserProfile,
   addNewAvatar,
   editUser,
+  searchUsers,
 } = require("../controllers/users");
 
+router.get("/users/search?", searchUsers);
 router.post("/register", validatorInfoUser, postUser);
 router.post("/login", loginUser);
 router.post(

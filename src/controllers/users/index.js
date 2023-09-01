@@ -4,6 +4,7 @@ const loginUser = require("./loginUser");
 const seeUserProfile = require("../users/seeUserProfile");
 const addNewAvatar = require("./addNewAvatar");
 const editUser = require("./editUser");
+const searchUsers = require("./searchUsers");
 
 module.exports = {
   postUser,
@@ -12,4 +13,5 @@ module.exports = {
   addNewAvatar,
   seeUserProfile,
   editUser,
+  searchUsers,
 };

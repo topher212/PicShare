@@ -6,14 +6,20 @@ const seeUserProfile = async (req, res, next) => {
     const connect = await getDB();
 
     const [user] = await connect.query(
-      `SELECT date, email, name, avatar FROM users WHERE id=?`,
+      `SELECT date, username, name, avatar ,deleted FROM users WHERE id=?`,
       [idUser]
     );
 
     if (!user.length) {
       return res.status(404).send({
-        status: "Not Found",
-        message: "User not found",
+        status: "Error",
+        message: "Usuario no encontrado",
+      });
+    }
+    if (user[0].deleted === 1) {
+      return res.status(404).send({
+        status: "Error",
+        message: "Este usuario ha sido borrado",
       });
     }
 
