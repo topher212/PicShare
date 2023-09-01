@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "912ffa19-b2cc-43c8-ad8a-664b6117b243",
+		"_postman_id": "7d1134b8-414e-4443-b261-05221b85dc51",
 		"name": "PicShare",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28582315"
+		"_exporter_id": "28582324"
 	},
 	"item": [
 		{
@@ -23,13 +23,23 @@
 									"type": "text"
 								},
 								{
+									"key": "name",
+									"value": "zoe profe",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "zoer101",
+									"type": "text"
+								},
+								{
 									"key": "pwd",
 									"value": "123456",
 									"type": "text"
 								},
 								{
-									"key": "name",
-									"value": "zoe profe",
+									"key": "repeatpwd",
+									"value": "123456",
 									"type": "text"
 								}
 							]
@@ -58,7 +68,7 @@
 							"formdata": [
 								{
 									"key": "email",
-									"value": "usuario1zoe@mail.com",
+									"value": "zoe@mail.com",
 									"type": "text"
 								},
 								{
@@ -88,7 +98,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3001/users/5",
+							"raw": "http://localhost:3001/users/3",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -96,7 +106,7 @@
 							"port": "3001",
 							"path": [
 								"users",
-								"5"
+								"3"
 							]
 						}
 					},
@@ -145,7 +155,7 @@
 						"header": [
 							{
 								"key": "authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicm9sZSI6Im5vcm1hbCIsImlhdCI6MTY5MTMyNjU5NywiZXhwIjoxNjkxNDEyOTk3fQ.4D_FvgXQzc6K9nxxnAz-Wn_WbppRlYOqxnPnCmJPSWs",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjkzNTg2MTc0LCJleHAiOjE2OTM2NzI1NzR9.Nrx1llpq2NElpsWZ2f0AdmnMRNYZMHiM4GXXvRZO2O0",
 								"type": "text"
 							}
 						],
@@ -159,7 +169,12 @@
 								},
 								{
 									"key": "name",
-									"value": "zoe porta",
+									"value": "zoe porta new",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "zoe101",
 									"type": "text"
 								},
 								{
@@ -169,14 +184,20 @@
 								},
 								{
 									"key": "pwdNew",
-									"value": "1234567",
+									"value": "12345678",
 									"description": "campo opcional para cambio de contraseña",
+									"type": "text"
+								},
+								{
+									"key": "repeatpwd",
+									"value": "12345678",
+									"description": "opcional",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3001/users/5",
+							"raw": "http://localhost:3001/users/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -184,7 +205,7 @@
 							"port": "3001",
 							"path": [
 								"users",
-								"5"
+								"2"
 							]
 						}
 					},
@@ -211,6 +232,32 @@
 							"path": [
 								"users",
 								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/users/search?username=est",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"search"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "est"
+								}
 							]
 						}
 					},
