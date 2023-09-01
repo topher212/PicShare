@@ -19,7 +19,9 @@ const deleteOldAvatar = async (req, res, next) => {
          WHERE id = ?`,
         ['', idUser]
       );
-
+      
+      connect.release();
+      
       const avatarPath = path.join(`${__dirname}../../uploads/avatarUser/${idUser}/${user[0].avatar}`);
       await fs.unlink(avatarPath);
     };

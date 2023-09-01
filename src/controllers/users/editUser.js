@@ -21,6 +21,7 @@ const editUser = async (req, res, next) => {
       [idUser, pwd]
     );
     if (oldPwd.length === 0) {
+      connect.release();
       return res
         .status(401)
         .send({
@@ -39,6 +40,7 @@ const editUser = async (req, res, next) => {
         [email]
       );
       if (existingEmail.length > 0) {
+        connect.release();
         return res.status(409).send({
           status: "ERROR",
           message:

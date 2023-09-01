@@ -1,0 +1,480 @@
+{
+	"info": {
+		"_postman_id": "912ffa19-b2cc-43c8-ad8a-664b6117b243",
+		"name": "PicShare",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28582315"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Registrar usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "usuario1zoe@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "pwd",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "zoe profe",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "usuario1zoe@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "pwd",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver perfil de usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/users/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Añadir/Modificar avatar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicm9sZSI6Im5vcm1hbCIsImlhdCI6MTY5MTMyNjU5NywiZXhwIjoxNjkxNDEyOTk3fQ.4D_FvgXQzc6K9nxxnAz-Wn_WbppRlYOqxnPnCmJPSWs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/C:/Users/esteb/Downloads/Atletismo.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/users/avatar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"avatar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar datos de registro",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicm9sZSI6Im5vcm1hbCIsImlhdCI6MTY5MTMyNjU5NywiZXhwIjoxNjkxNDEyOTk3fQ.4D_FvgXQzc6K9nxxnAz-Wn_WbppRlYOqxnPnCmJPSWs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "usuario1zoe@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "zoe porta",
+									"type": "text"
+								},
+								{
+									"key": "pwd",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "pwdNew",
+									"value": "1234567",
+									"description": "campo opcional para cambio de contraseña",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/users/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar usuario (soft delete)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwicm9sZSI6Im5vcm1hbCIsImlhdCI6MTY5MTMyNzgzMCwiZXhwIjoxNjkxNDE0MjMwfQ.CCrO4OiE01MnDsbt8ZvzgDjXLdlUEAa8dxNJk91bgec",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/users/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"users",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Entries",
+			"item": [
+				{
+					"name": "Añadir publicación/photo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicm9sZSI6Im5vcm1hbCIsImlhdCI6MTY5MTMyNjU5NywiZXhwIjoxNjkxNDEyOTk3fQ.4D_FvgXQzc6K9nxxnAz-Wn_WbppRlYOqxnPnCmJPSWs",
+								"description": "david",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "place",
+									"value": "coruña",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "foto de zoe",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/C:/Users/esteb/OneDrive/Pictures/github logo.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/entries/photos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"entries",
+								"photos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver última foto de cada usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar foto por descripción",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/entries/photos/search?description=zoe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"entries",
+								"photos",
+								"search"
+							],
+							"query": [
+								{
+									"key": "description",
+									"value": "zoe"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dar like a publicación",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicm9sZSI6Im5vcm1hbCIsImlhdCI6MTY5MTMyNjU5NywiZXhwIjoxNjkxNDEyOTk3fQ.4D_FvgXQzc6K9nxxnAz-Wn_WbppRlYOqxnPnCmJPSWs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:3001/entries/1/votes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"entries",
+								"1",
+								"votes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comentar publicación",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicm9sZSI6Im5vcm1hbCIsImlhdCI6MTY5MTMyNjU5NywiZXhwIjoxNjkxNDEyOTk3fQ.4D_FvgXQzc6K9nxxnAz-Wn_WbppRlYOqxnPnCmJPSWs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "comment",
+									"value": "comentario para la publicación de zoe",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/entries/1/comment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"entries",
+								"1",
+								"comment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar comentario",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicm9sZSI6Im5vcm1hbCIsImlhdCI6MTY5MTMyNjU5NywiZXhwIjoxNjkxNDEyOTk3fQ.4D_FvgXQzc6K9nxxnAz-Wn_WbppRlYOqxnPnCmJPSWs",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "comment",
+									"value": "comentario editado de zoe",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/entries/1/comment/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"entries",
+								"1",
+								"comment",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar comentario",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicm9sZSI6Im5vcm1hbCIsImlhdCI6MTY5MTMyNjU5NywiZXhwIjoxNjkxNDEyOTk3fQ.4D_FvgXQzc6K9nxxnAz-Wn_WbppRlYOqxnPnCmJPSWs",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/entries/1/comment/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"entries",
+								"1",
+								"comment",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar publicación",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicm9sZSI6Im5vcm1hbCIsImlhdCI6MTY5MTMyNjU5NywiZXhwIjoxNjkxNDEyOTk3fQ.4D_FvgXQzc6K9nxxnAz-Wn_WbppRlYOqxnPnCmJPSWs",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3001/entries/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"entries",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

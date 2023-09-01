@@ -15,7 +15,7 @@ const postUser = async (req, res, next) => {
         `SELECT id FROM users WHERE deleted = 1 AND email=?`,
         [email]
       );
-      if (deleteUserToRocover.length > 0) {
+      if (deleteUserToRocover[0].length > 0) {
         await connect.query(
           `
         UPDATE users
@@ -29,6 +29,7 @@ const postUser = async (req, res, next) => {
           message: "Tu usuario ha sido recuperado",
         });
       }
+      connect.release();
       return res.status(409).send({
         status: "ERROR",
         message: "El usuario ya existe",

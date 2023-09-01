@@ -4,7 +4,7 @@ const seePhotoUsers = async (req, res, next) => {
   try {
     const connect = await getDB();
     const [users] = await connect.query(
-      `SELECT  u.name, u.email as userName, p.photo, 
+      `SELECT  u.name, u.email as username, p.photo, 
       p.date, e.description, e.place, e.id as idEntry
       FROM users u
        JOIN entries e ON e.user_id=u.id
@@ -13,6 +13,7 @@ const seePhotoUsers = async (req, res, next) => {
     );
 
     let userMap = users.map((user) => {
+      console.log(users);
       return [user.userName, user];
     });
     const userMapArr = new Map(userMap);

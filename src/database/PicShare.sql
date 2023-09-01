@@ -13,6 +13,7 @@ CREATE TABLE users (
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(512) NOT NULL,
     name VARCHAR(100),
+    username VARCHAR(100) UNIQUE, NOT NULL,
     avatar VARCHAR(100),
     active BOOLEAN DEFAULT false,
     role ENUM("admin", "normal") DEFAULT "normal" NOT NULL,
@@ -59,10 +60,10 @@ CREATE TABLE comments (
 );
 
 
-INSERT INTO users (email, name, password, role) VALUES ('lili@mail.com','lili',SHA2(12345,512), 'admin');
+INSERT INTO users (email, name, username, password, role) VALUES ('lili@mail.com','lili', 'lili', SHA2(12345,512), 'admin');
 
-INSERT INTO users (email, name, password, role) VALUES ('esteban@mail.com','esteban',SHA2(12345,512), 'admin');
+INSERT INTO users (email, name, username, password, role) VALUES ('esteban@mail.com','esteban', 'esteban', SHA2(12345,512), 'admin');
 
-INSERT INTO users (email, name, password, role) VALUES ('david@mail.com','david',SHA2(12345,512), 'admin');
+INSERT INTO users (email, name, username, password, role) VALUES ('david@mail.com','david', 'david', SHA2(12345,512), 'admin');
 
-INSERT INTO users (email, name, password, role) VALUES ('cristopher@mail.com','cristopher',SHA2(12345,512), 'admin');
+INSERT INTO users (email, name, username, password, role) VALUES ('cristopher@mail.com','cristopher', 'cristopher', SHA2(12345,512), 'admin');
