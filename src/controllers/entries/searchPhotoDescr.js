@@ -14,7 +14,7 @@ const searchPhotoDescr = async (req, res, next) => {
   try {
     const connect = await getDB();
     const query = `
-        SELECT photos.photo, entries.description, photos.entry_id as idEntry, users.username as username
+        SELECT photos.photo, entries.description, photos.entry_id as idEntry, users.username as username, entries.user_id as idUser
         FROM photos
         JOIN entries ON photos.entry_id = entries.id
         JOIN users ON entries.user_id = users.id 
@@ -23,15 +23,18 @@ const searchPhotoDescr = async (req, res, next) => {
 
     const [namePhoto] = await connect.query(query, [searchQuery]);
     connect.release();
-
     if (namePhoto.length === 0) {
       return res.status(404).send({ message: "No se encontraron fotos." });
     }
 
     const imagePaths = namePhoto.map((photoN) =>
-      path.join(__dirname, "../../uploads/photos", photoN.photo)
+      path.join(
+        __dirname,
+        "../../uploads/photos",
+        photoN.idUser.toString(),
+        photoN.photo
+      )
     );
-
     const photoPromise = namePhoto.map(async (user) => {
       const [total] = await connect.query(
         `
