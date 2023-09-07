@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const fileupload = require("express-fileupload");
 const path = require("path");
+const cors = require('cors');
 
 const server = express();
 
@@ -12,6 +13,12 @@ const userRouter = require("../src/router/userRouter");
 const entryRouter = require("../src/router/entryRouter");
 
 const seePhotoUsers = require("../src/controllers/entries/seePhotoUsers");
+
+const corsOptions = {
+  origin: 'http://localhost:5173', 
+};
+
+server.use(cors(corsOptions)); 
 
 server.use(express.urlencoded({ extended: false }));
 server.use(express.json());
