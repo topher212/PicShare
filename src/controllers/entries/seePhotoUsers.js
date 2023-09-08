@@ -33,8 +33,9 @@ const seePhotoUsers = async (req, res, next) => {
       user["likes"] = totalLikes[0].likes;
 
       const [comments] = await connect.query(
-        `SELECT comment, user_id, date, edit_date
-        FROM comments
+        `SELECT c.comment, c.user_id as idUser, c.date, c.edit_date, u.username as username, u.avatar as avatar
+        FROM comments c 
+        JOIN users u ON c.user_id = u.id 
         WHERE entry_id=?
         `,
         [user.idEntry]

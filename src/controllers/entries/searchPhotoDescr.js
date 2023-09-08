@@ -12,7 +12,7 @@ const searchPhotoDescr = async (req, res, next) => {
   try {
     const connect = await getDB();
     const query = `
-        SELECT photos.photo, entries.description, photos.entry_id as idEntry, users.username as username, entries.user_id as idUser
+        SELECT photos.photo, entries.description, photos.entry_id as idEntry, users.username as username,users.avatar as avatar, entries.user_id as idUser
         FROM photos
         JOIN entries ON photos.entry_id = entries.id
         JOIN users ON entries.user_id = users.id 
@@ -36,7 +36,7 @@ const searchPhotoDescr = async (req, res, next) => {
         [user.idEntry]
       );
       const [comments] = await connect.query(
-        `SELECT c.comment, c.user_id, c.date, c.edit_date, u.username as username
+        `SELECT c.comment, c.user_id as idUser, c.date, c.edit_date, u.username as username, u.avatar as avatar
         FROM comments c 
         JOIN users u ON c.user_id = u.id 
         WHERE entry_id=?
