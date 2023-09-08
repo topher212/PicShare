@@ -23,7 +23,7 @@ const loginUser = async (req, res, next) => {
 
     if (!user.length) {
       connect.release();
-      return res.send({
+      return res.status(400).send({
         status: "ERROR",
         message: "Usuario o Contraseña incorrecta. Vuelve a introducirla.",
       });
