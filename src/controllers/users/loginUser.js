@@ -51,13 +51,21 @@ const loginUser = async (req, res, next) => {
     );
 
     connect.release();
+    jwt.verify(token, process.env.SECRET_TOKEN, (err, decodedToken) => {
+      if (err) {
+        res.status(401).json({ error: "Token inválido o expirado" });
+      } else {
+        const userData = decodedToken;
 
-    res.status(200).send({
-      status: "OK",
-      message: "Login correcto",
-      data: {
-        token,
-      },
+        res.status(200).send({
+          status: "OK",
+          message: "Login correcto",
+          data: {
+            token,
+            idUser: info.id,
+          },
+        });
+      }
     });
   } catch (error) {
     next(error);
