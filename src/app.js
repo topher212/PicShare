@@ -2,7 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const fileupload = require("express-fileupload");
 const path = require("path");
-const cors = require('cors');
+const cors = require("cors");
 
 const server = express();
 
@@ -15,20 +15,26 @@ const entryRouter = require("../src/router/entryRouter");
 const seePhotoUsers = require("../src/controllers/entries/seePhotoUsers");
 
 const corsOptions = {
-  origin: 'http://localhost:5173', 
+  origin: "http://localhost:5173",
 };
 
-server.use(cors(corsOptions)); 
+server.use(cors(corsOptions));
 
 server.use(express.urlencoded({ extended: false }));
 server.use(express.json());
 server.use(morgan("dev"));
 server.use(fileupload());
 
+// Configuración de archivos estáticos dinámicos
 const staticDir = path.join(__dirname, "uploads");
-server.use(express.static(staticDir));
-createStaticDir(staticDir);
 
+// Middleware para servir archivos estáticos desde carpetas dinámicas
+server.use("/uploads/:folder/:userId", (req, res, next) => {
+  const { folder, userId } = req.params;
+  const userStaticDir = path.join(staticDir, folder, userId);
+
+  express.static(userStaticDir)(req, res, next);
+});
 server.get("/", seePhotoUsers);
 
 server.use(userRouter);

@@ -1,6 +1,4 @@
 const getDB = require("../../database/db");
-const fs = require("fs/promises");
-const path = require("path");
 
 const searchPhotoDescr = async (req, res, next) => {
   const { description } = req.query;
@@ -27,14 +25,6 @@ const searchPhotoDescr = async (req, res, next) => {
       return res.status(404).send({ message: "No se encontraron fotos." });
     }
 
-    const imagePaths = namePhoto.map((photoN) =>
-      path.join(
-        __dirname,
-        "../../uploads/photos",
-        photoN.idUser.toString(),
-        photoN.photo
-      )
-    );
     const photoPromise = namePhoto.map(async (user) => {
       const [total] = await connect.query(
         `
@@ -65,7 +55,6 @@ const searchPhotoDescr = async (req, res, next) => {
         status: "Ok",
         message: "Fotos encontradas con éxito.",
         photos: namePhoto,
-        imagePaths,
       });
     });
   } catch (error) {

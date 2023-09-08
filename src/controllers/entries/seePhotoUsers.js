@@ -4,8 +4,8 @@ const seePhotoUsers = async (req, res, next) => {
   try {
     const connect = await getDB();
     const [users] = await connect.query(
-      `SELECT  u.name, u.username as username, p.photo, 
-      p.date, e.description, e.place, e.id as idEntry,  e.user_id as idUser
+      `SELECT u.name, u.username as username, p.photo, u.avatar as avatar,
+      p.date, e.description, e.place, e.id as idEntry, e.user_id as idUser
       FROM users u
        JOIN entries e ON e.user_id=u.id
        JOIN photos p ON p.entry_id=e.id
@@ -13,8 +13,7 @@ const seePhotoUsers = async (req, res, next) => {
     );
 
     let userMap = users.map((user) => {
-      console.log(users);
-      return [user.userName, user];
+      return [user.username, user];
     });
     const userMapArr = new Map(userMap);
     let userUnique = [...userMapArr.values()];
