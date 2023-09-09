@@ -28,7 +28,9 @@ const seeUserProfile = async (req, res, next) => {
        e.description as description
         FROM photos p
         INNER JOIN entries e ON p.entry_id = e.id
-        WHERE e.user_id = ?`,
+        WHERE e.user_id = ? 
+        Order by p.date DESC`,
+
       [idUser]
     );
 
