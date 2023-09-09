@@ -6,7 +6,7 @@ const seeUserProfile = async (req, res, next) => {
     const connect = await getDB();
 
     const [user] = await connect.query(
-      `SELECT date, username, name, avatar ,deleted FROM users WHERE id=?`,
+      `SELECT id as idUser, date, username, name, avatar ,deleted FROM users WHERE id=?`,
       [idUser]
     );
 
