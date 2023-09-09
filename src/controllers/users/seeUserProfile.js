@@ -24,9 +24,11 @@ const seeUserProfile = async (req, res, next) => {
     }
 
     const [photos] = await connect.query(
-      `SELECT date, photo, entry_id as idEntry 
-      FROM photos 
-      WHERE entry_id IN (SELECT id FROM entries WHERE user_id=?)`,
+      `SELECT p.date, p.photo, p.entry_id as idEntry, e.user_id as idUser,
+       e.description as description
+        FROM photos p
+        INNER JOIN entries e ON p.entry_id = e.id
+        WHERE e.user_id = ?`,
       [idUser]
     );
 
