@@ -11,7 +11,7 @@ const searchUsers = async (req, res, next) => {
   try {
     const connect = await getDB();
     const query = `
-        SELECT username, avatar, name
+        SELECT username, avatar, name, id as idUser
         FROM users
         WHERE username LIKE ?;
       `;
@@ -25,7 +25,7 @@ const searchUsers = async (req, res, next) => {
     await res.status(200).send({
       status: "Ok",
       message: "Usuarios encontrados con éxito.",
-      users: users,
+      data: users,
     });
   } catch (error) {
     next(error);
