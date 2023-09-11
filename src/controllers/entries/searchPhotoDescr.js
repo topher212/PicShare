@@ -42,7 +42,7 @@ const searchPhotoDescr = async (req, res, next) => {
         FROM comments c 
         JOIN users u ON c.user_id = u.id 
         WHERE entry_id= ? 
-        ORDER BY c.edit_date DESC , c.date DESC
+        ORDER BY c.date DESC , c.edit_date DESC
         `,
         [user.idEntry]
       );

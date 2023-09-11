@@ -23,7 +23,7 @@ const createComment = async (req, res, next) => {
       status: "OK",
       message: "Publicación comentada correctamente.",
       data: {
-        entry: idEntry,
+        idEntry: idEntry,
         comment: comment,
       },
     });
