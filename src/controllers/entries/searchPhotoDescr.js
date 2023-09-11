@@ -16,7 +16,9 @@ const searchPhotoDescr = async (req, res, next) => {
         FROM photos
         JOIN entries ON photos.entry_id = entries.id
         JOIN users ON entries.user_id = users.id 
-        WHERE entries.description LIKE ?;
+        WHERE entries.description LIKE ?
+        ORDER BY photos.date DESC
+        ;
       `;
 
     const [namePhoto] = await connect.query(query, [searchQuery]);
