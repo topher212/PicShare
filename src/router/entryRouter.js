@@ -25,6 +25,8 @@ const {
 router.get("/entries/photos/search?", searchPhotoDescr);
 router.post("/entries/photos", isUser, validatorFiles, addPhoto);
 router.post("/entries/:idEntry/votes", isUser, entryExists, likeEntry);
+router.delete("/entries/:idEntry/votes", isUser, entryExists, likeEntry);
+router.get("/entries/:idEntry/votes", isUser, entryExists, likeEntry);
 router.post("/entries/:idEntry/comment", isUser, entryExists, createComment);
 router.put("/entries/:idEntry/comment/:idComment", isUser, entryExists, commentExists, canEditComment, editComment);
 router.delete("/entries/:idEntry/comment/:idComment", isUser, entryExists, commentExists, canEditComment, deleteComment);

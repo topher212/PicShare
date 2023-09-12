@@ -7,45 +7,83 @@ const likeEntry = async (req, res, next) => {
         const { idEntry } = req.params;
         const idUser = req.userInfo.id;
 
-        //Comprobar si el user ha votado la publicación
+        // Comprobar si la solicitud es para obtener los "likes" de un usuario en su perfil
+        if (req.path.startsWith("/users")) {
+            // Obtener los "likes" de un usuario específico
+            const [userLikes] = await connect.query(
+                `SELECT entry_id
+                 FROM likes
+                 WHERE user_id = ?`, [idUser]
+            );
+
+            // Obtener las fotos del usuario
+            const [userPhotos] = await connect.query(
+                `SELECT idEntry, photo
+                 FROM photos
+                 WHERE idUser = ?`, [idUser]
+            );
+
+            connect.release();
+
+            // Mapear los "likes" de usuario en un objeto para un acceso más fácil
+            const userLikesMap = userLikes.reduce((map, like) => {
+                map[like.entry_id] = true;
+                return map;
+            }, {});
+
+            // Agregar el número de "likes" a cada foto del usuario
+            const photosWithLikes = userPhotos.map((photo) => ({
+                idEntry: photo.idEntry,
+                photo: photo.photo,
+                likesCount: userLikesMap[photo.idEntry] ? 1 : 0,
+            }));
+
+            return res.status(200).send({
+                status: 'OK',
+                message: 'Likes del usuario obtenidos correctamente',
+                data: {
+                    userLikes: userLikes.map((like) => like.entry_id),
+                }
+            });
+        }        
+
+        // Comprobar si el usuario ya ha votado la publicación
         const [existingVote] = await connect.query(
             `SELECT id
              FROM likes
-             WHERE user_id = ? AND entry_id = ?`, [idUser, idEntry]
+             WHERE entry_id = ?`, [idEntry]
         );
 
         let totalVotes;
         if (existingVote.length > 0) {
-            //Eliminar voto
+            // El usuario ya ha votado, eliminar el voto
             await connect.query(
                 `DELETE FROM likes 
                  WHERE user_id = ? AND entry_id = ?`, [idUser, idEntry]
             );
 
-            //Contar votos
+            // Recalcular el número total de votos
             const [total] = await connect.query(
                 `SELECT COUNT(*) as totalVotos
-                 FROM entries e
-                 INNER JOIN likes l ON (l.entry_id = e.id)
-                 WHERE e.id = ?`, [idEntry]
+                 FROM likes
+                 WHERE entry_id = ?`, [idEntry]
             );
-            totalVotes = total[0].totalVotos
+            totalVotes = total[0].totalVotos;
         } else {
-            //Añadir voto
+            // El usuario no ha votado, añadir el voto
             await connect.query(
                 `INSERT INTO likes (user_id, entry_id)
-                 values (?, ?)`, [idUser, idEntry]
+                 VALUES (?, ?)`, [idUser, idEntry]
             );
 
-            //Contar votos
+            // Recalcular el número total de votos
             const [total] = await connect.query(
                 `SELECT COUNT(*) as totalVotos
-                 FROM entries e
-                 INNER JOIN likes l ON (l.entry_id = e.id)
-                 WHERE e.id = ?`, [idEntry]
+                 FROM likes
+                 WHERE entry_id = ?`, [idEntry]
             );
-            totalVotes = total[0].totalVotos
-        };
+            totalVotes = total[0].totalVotos;
+        }
 
         connect.release();
 
@@ -59,7 +97,7 @@ const likeEntry = async (req, res, next) => {
 
     } catch (error) {
         next(error);
-    };
+    }
 };
 
 module.exports = likeEntry;
