@@ -83,21 +83,6 @@ const validatorInfoUser = (req, res, next) => {
       }
     }
 
-    if (!req.body.pwdNew) {
-      if (req.body.repeatpwd && req.body.repeatpwd !== req.body.pwd) {
-        return res.send({
-          status: "Error",
-          message: "Las contraseñas deben ser iguales.",
-        });
-      }
-      if (!req.body.repeatpwd) {
-        return res.send({
-          status: "Error",
-          message: "Debes repetir la contraseña.",
-        });
-      }
-    }
-
     if (!/^[A-Za-z\s]+$/.test(req.body.name)) {
       return res.send({
         status: "Error",
