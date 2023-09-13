@@ -23,13 +23,7 @@ const {
 router.get("/users/search?", searchUsers);
 router.post("/register", validatorInfoUser, postUser);
 router.post("/login", loginUser);
-router.post(
-  "/users/avatar",
-  isUser,
-  validatorFiles,
-  deleteOldAvatar,
-  addNewAvatar
-);
+router.post("/users/avatar", isUser, validatorFiles, deleteOldAvatar, addNewAvatar);
 router.get("/users/:idUser", userExists, seeUserProfile);
 router.delete("/users/:idUser", isUser, canDeleteUser, deleteUser);
 router.put("/users/:idUser", isUser, canEditUser, validatorInfoUser, editUser);

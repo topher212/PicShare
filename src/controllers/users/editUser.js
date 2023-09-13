@@ -45,14 +45,15 @@ const editUser = async (req, res, next) => {
             "Ya existe un usuario registrado con ese email. Usa otro email",
         });
       }
-      // await connect.query(
-      //   `
-      //   UPDATE users
-      //   SET email = ?, name=?, lastAuthUpdate = ?
-      //   WHERE id = ?
-      //   `,
-      //   [email, name, new Date(), idUser]
-      // );
+
+      await connect.query(
+        `
+        UPDATE users
+        SET email = ?, name=?, lastAuthUpdate = ?
+        WHERE id = ?
+        `,
+        [email, name, new Date(), idUser]
+      );
     }
 
     if (username && username !== user[0].username) {
