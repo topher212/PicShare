@@ -34,6 +34,7 @@ const addPhoto = async (req, res, next) => {
         await fs.mkdir(`${photoFolder}/${idUser}`);
       }
     };
+    connect.release();
 
     if (req.files && req.files.photo) {
       createFolderUser();
@@ -51,6 +52,7 @@ const addPhoto = async (req, res, next) => {
         message: "La imagen se cargó correctamente",
       });
     }
+    connect.release();
   } catch (error) {
     next(error);
   }
