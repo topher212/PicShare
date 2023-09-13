@@ -33,6 +33,7 @@ const seeUserProfile = async (req, res, next) => {
 
       [idUser]
     );
+    connect.release();
 
     const photosWithLikesAndComments = photos.map(async (photo) => {
       const [totalLikes] = await connect.query(
@@ -47,6 +48,8 @@ const seeUserProfile = async (req, res, next) => {
 
       photo["likes"] = totalLikes[0].likes;
 
+      connect.release();
+
       const [comments] = await connect.query(
         `SELECT c.comment, c.user_id as idUser, c.date, c.edit_date, u.username as username, u.avatar as avatar
         FROM comments c 
@@ -57,6 +60,8 @@ const seeUserProfile = async (req, res, next) => {
         [photo.idEntry]
       );
       photo["comments"] = comments;
+
+      connect.release();
 
       if (!photo["comments"].length) {
         photo["comments"] = "No hay comentarios en esta publicación";

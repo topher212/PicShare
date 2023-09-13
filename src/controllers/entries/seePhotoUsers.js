@@ -31,6 +31,7 @@ const seePhotoUsers = async (req, res, next) => {
         [user.idEntry]
       );
       user["likes"] = totalLikes[0].likes;
+      connect.release();
 
       const [comments] = await connect.query(
         `SELECT c.comment, c.user_id as idUser, c.date, c.edit_date, u.username as username, u.avatar as avatar
@@ -42,6 +43,7 @@ const seePhotoUsers = async (req, res, next) => {
         [user.idEntry]
       );
       user["comments"] = comments;
+      connect.release();
 
       if (!user["comments"].length) {
         user["comments"] = "No hay comentarios en esta publicación";
@@ -49,6 +51,7 @@ const seePhotoUsers = async (req, res, next) => {
     });
 
     await Promise.all(photosWithLikesAndComments);
+    connect.release();
 
     await res.status(200).send({
       status: "OK",
