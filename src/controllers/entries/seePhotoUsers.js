@@ -35,7 +35,11 @@ const seePhotoUsers = async (req, res, next) => {
       connect.release();
 
       const [comments] = await connect.query(
+<<<<<<< Updated upstream
         `SELECT c.comment, c.user_id as idUser, c.date, c.edit_date, u.username as username, u.avatar as avatar, u.deleted as 'user deleted'
+=======
+        `SELECT c.comment, c.id as idComment, c.user_id as idUser, c.date, c.edit_date, u.username as username, u.avatar as avatar
+>>>>>>> Stashed changes
         FROM comments c 
         JOIN users u ON c.user_id = u.id 
         WHERE entry_id= ? AND NOT u.deleted
