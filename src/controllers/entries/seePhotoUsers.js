@@ -5,10 +5,11 @@ const seePhotoUsers = async (req, res, next) => {
     const connect = await getDB();
     const [users] = await connect.query(
       `SELECT u.name, u.username as username, p.photo, u.avatar as avatar,
-      p.date, e.description, e.place, e.id as idEntry, e.user_id as idUser
+      p.date, e.description, e.place, e.id as idEntry, e.user_id as idUser, u.deleted as 'user deleted'
       FROM users u
        JOIN entries e ON e.user_id=u.id
        JOIN photos p ON p.entry_id=e.id
+       WHERE NOT u.deleted
       ORDER BY p.date, u.name`
     );
 
@@ -34,10 +35,10 @@ const seePhotoUsers = async (req, res, next) => {
       connect.release();
 
       const [comments] = await connect.query(
-        `SELECT c.comment, c.user_id as idUser, c.date, c.edit_date, u.username as username, u.avatar as avatar
+        `SELECT c.comment, c.user_id as idUser, c.date, c.edit_date, u.username as username, u.avatar as avatar 
         FROM comments c 
         JOIN users u ON c.user_id = u.id 
-        WHERE entry_id= ? 
+        WHERE entry_id = 11 AND NOT u.deleted
         ORDER BY c.date DESC , c.edit_date DESC
         `,
         [user.idEntry]

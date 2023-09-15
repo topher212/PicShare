@@ -11,9 +11,9 @@ const searchUsers = async (req, res, next) => {
   try {
     const connect = await getDB();
     const query = `
-        SELECT username, avatar, name, id as idUser
+        SELECT username, avatar, name, id as idUser, deleted as 'user deleted'
         FROM users
-        WHERE username LIKE ?;
+        WHERE username LIKE ? AND NOT deleted;
       `;
 
     const [users] = await connect.query(query, [searchQuery]);
