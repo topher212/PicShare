@@ -53,9 +53,7 @@ const validatorInfoUser = (req, res, next) => {
       const validation = schema.validate(userData);
 
       if (validation.error) {
-        return res
-          .status(403)
-          .send({ status: "Error", message: validation.error.message });
+        return res.status(403).send({ status: "Error", message: validation.error.message });
       }
     }
 
@@ -70,13 +68,13 @@ const validatorInfoUser = (req, res, next) => {
 
     if (req.body.pwdNew) {
       if (req.body.repeatpwd && req.body.repeatpwd !== req.body.pwdNew) {
-        return res.send({
+        return res.status(400).send({
           status: "Error",
           message: "Las contraseñas deben coincidir.",
         });
       }
       if (!req.body.repeatpwd) {
-        return res.send({
+        return res.status(400).send({
           status: "Error",
           message: "Debes repetir la contraseña.",
         });
@@ -84,7 +82,7 @@ const validatorInfoUser = (req, res, next) => {
     }
 
     if (!/^[A-Za-z\s]+$/.test(req.body.name)) {
-      return res.send({
+      return res.status(400).send({
         status: "Error",
         message: "Campo nombre no permite números ni caracteres especiales.",
       });
