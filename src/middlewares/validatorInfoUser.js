@@ -53,7 +53,9 @@ const validatorInfoUser = (req, res, next) => {
       const validation = schema.validate(userData);
 
       if (validation.error) {
-        return res.status(403).send({ status: "Error", message: validation.error.message });
+        return res
+          .status(403)
+          .send({ status: "Error", message: validation.error.message });
       }
     }
 
@@ -81,7 +83,7 @@ const validatorInfoUser = (req, res, next) => {
       }
     }
 
-    if (!/^[A-Za-z\s]+$/.test(req.body.name)) {
+    if (!/^[A-Za-zÀ-ÖØ-öø-ÿ\sÇçñÑ]+$/.test(req.body.name)) {
       return res.status(400).send({
         status: "Error",
         message: "Campo nombre no permite números ni caracteres especiales.",
