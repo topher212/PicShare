@@ -20,8 +20,8 @@ const validatorFiles = (req, res, next) => {
 
         const schema = hapiJoi
           .string()
-          .max(30)
-          .message("El nombre del archivo debe tener como máximo 30 caracteres")
+          .max(80)
+          .message("El nombre del archivo no puede superar los 80 caracteres")
           .required();
         const validation = schema.validate(name);
 
@@ -47,8 +47,8 @@ const validatorFiles = (req, res, next) => {
 
         const schema = hapiJoi
           .string()
-          .max(30)
-          .message("El nombre del archivo debe tener como máximo 30 caracteres")
+          .max(80)
+          .message("El nombre del archivo no puede superar los 80 caracteres")
           .required();
         const validation = schema.validate(name);
 

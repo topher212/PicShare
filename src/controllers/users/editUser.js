@@ -49,10 +49,10 @@ const editUser = async (req, res, next) => {
       await connect.query(
         `
         UPDATE users
-        SET email = ?, name=?, lastAuthUpdate = ?
+        SET email = ?, name=?
         WHERE id = ?
         `,
-        [email, name, new Date(), idUser]
+        [email, name, idUser]
       );
     }
 
@@ -76,10 +76,10 @@ const editUser = async (req, res, next) => {
       await connect.query(
         `
         UPDATE users
-        SET username = ? ,email = ?, name=?, lastAuthUpdate = ?
+        SET username = ? ,email = ?, name=?
         WHERE id = ?
         `,
-        [username, email, name, new Date(), idUser]
+        [username, email, name, idUser]
       );
     }
 

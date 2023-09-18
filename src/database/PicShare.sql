@@ -14,7 +14,7 @@ CREATE TABLE users (
     password VARCHAR(512) NOT NULL,
     name VARCHAR(100),
     username VARCHAR(100) UNIQUE NOT NULL,
-    avatar VARCHAR(100),
+    avatar VARCHAR(250),
     active BOOLEAN DEFAULT false,
     role ENUM("admin", "normal") DEFAULT "normal" NOT NULL,
     deleted BOOLEAN DEFAULT false,
@@ -33,7 +33,7 @@ CREATE TABLE entries (
 CREATE TABLE photos (
 	id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    photo VARCHAR(100) NOT NULL,
+    photo VARCHAR(250) NOT NULL,
     entry_id INT UNSIGNED NOT NULL,
     FOREIGN KEY (entry_id) REFERENCES entries(id)
 );

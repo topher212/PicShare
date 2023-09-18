@@ -35,7 +35,7 @@ const isUser = async (req, res, next) => {
     if (timeStampCreateToken < lastAuthUpdate) {
       return res.status(401).send({
         status: "401: Token caducado",
-        message: "Inicia sesión para continuar",
+        message: "Inicia sesión para continuar-----------",
       });
     }
 
