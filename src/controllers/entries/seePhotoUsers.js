@@ -25,14 +25,18 @@ const seePhotoUsers = async (req, res, next) => {
 
     const photosWithLikesAndComments = userUnique.map(async (user) => {
       const [totalLikes] = await connect.query(
-        `SELECT COUNT(*) as likes, e.id as idEntry
+        `SELECT l.user_id as idUser
         FROM entries e
         JOIN likes l ON l.entry_id = e.id
         WHERE entry_id =?`,
         [user.idEntry]
       );
-      user["likes"] = totalLikes[0].likes;
+      user["likes"] = totalLikes;
       connect.release();
+
+      if (!user["likes"].length) {
+        user["likes"] = 0;
+      }
 
       const [comments] = await connect.query(
         `SELECT c.comment, c.id as idComment, c.user_id as idUser, c.date, c.edit_date, u.username as username, u.avatar as avatar, u.deleted as 'user deleted'

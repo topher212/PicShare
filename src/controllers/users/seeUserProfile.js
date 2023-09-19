@@ -37,16 +37,18 @@ const seeUserProfile = async (req, res, next) => {
 
     const photosWithLikesAndComments = photos.map(async (photo) => {
       const [totalLikes] = await connect.query(
-        `
-        SELECT COUNT(*) as likes, e.id as idEntry
+        `SELECT l.user_id as idUser
         FROM entries e
         JOIN likes l ON l.entry_id = e.id
-        WHERE entry_id=?
-        `,
+        WHERE entry_id =?`,
         [photo.idEntry]
       );
+      photo["likes"] = totalLikes;
+      connect.release();
 
-      photo["likes"] = totalLikes[0].likes;
+      if (!photo["likes"].length) {
+        photo["likes"] = 0;
+      }
 
       connect.release();
 

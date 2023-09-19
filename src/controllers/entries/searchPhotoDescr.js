@@ -29,16 +29,19 @@ const searchPhotoDescr = async (req, res, next) => {
 
     const photoPromise = namePhoto.map(async (user) => {
       const [totalLikes] = await connect.query(
-        `
-      SELECT  COUNT(*) as likes, e.id as idEntry
-      FROM entries e
-      JOIN likes l ON l.entry_id = e.id
-      WHERE entry_id=?
-    `,
+        `SELECT l.user_id as idUser
+        FROM entries e
+        JOIN likes l ON l.entry_id = e.id
+        WHERE entry_id =?`,
         [user.idEntry]
       );
+      user["likes"] = totalLikes;
+      connect.release();
 
-      user["likes"] = totalLikes[0].likes;
+      if (!user["likes"].length) {
+        user["likes"] = 0;
+      }
+
       connect.release();
 
       const [comments] = await connect.query(
