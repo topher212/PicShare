@@ -14,7 +14,7 @@ const loginUser = async (req, res, next) => {
     //comprobar que el usuario exista y que la pwd sea correcta y corresponda a ese mail
     const [user] = await connect.query(
       `
-                SELECT id, role, active
+                SELECT id, role, active, email
                 FROM users
                 WHERE email = ? AND password = SHA2(?,512)
             `,
@@ -34,6 +34,7 @@ const loginUser = async (req, res, next) => {
     const info = {
       id: user[0].id,
       role: user[0].role,
+      email: user[0].email,
     };
 
     //generar el token con el metodo sign el cual recibe como argumentos
@@ -65,6 +66,7 @@ const loginUser = async (req, res, next) => {
             token,
             idUser: info.id,
             role: info.role,
+            email: info.email,
           },
         });
       }
