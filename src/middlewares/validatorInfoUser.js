@@ -26,8 +26,8 @@ const validatorInfoUser = (req, res, next) => {
           .string()
           .min(6)
           .message("La contraseña debe tener mínimo 6 caracteres")
-          .max(20)
-          .message("La contraseña debe tener máximo 20 caracteres")
+          .max(30)
+          .message("La contraseña debe tener máximo 30 caracteres")
           .alphanum()
           .message("Permite alfa")
           .required(),
@@ -36,16 +36,14 @@ const validatorInfoUser = (req, res, next) => {
           .string()
           .min(5)
           .message("El nombre debe tener mínimo 5 caracteres")
-          .max(15)
-          .message("El nombre debe tener máximo 15 caracteres")
           .required(),
         username: hapiJoi.string().required(),
         pwdNew: hapiJoi
           .string()
           .min(6)
           .message("La nueva contraseña debe tener mínimo 6 caracteres")
-          .max(20)
-          .message("La nueva contraseña debe tener máximo 20 caracteres")
+          .max(30)
+          .message("La nueva contraseña debe tener máximo 30 caracteres")
           .alphanum()
           .message("Permite alfa"),
       });
