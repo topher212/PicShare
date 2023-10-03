@@ -18,7 +18,7 @@ const isUser = async (req, res, next) => {
     try {
       tokenInfo = jwt.verify(authorization, process.env.SECRET_TOKEN);
     } catch (error) {
-      return res.status(401).send({ status: 401, message: "Token no válido" });
+      return res.status(401).send({ status: 401, message: "Token Caducado" });
     }
 
     // Comprobar que la fecha del token sea válida respecto a lastAuthUpdate
@@ -33,10 +33,7 @@ const isUser = async (req, res, next) => {
     const timeStampCreateToken = new Date(tokenInfo.iat * 1000);
 
     if (timeStampCreateToken < lastAuthUpdate) {
-      return res.status(401).send({
-        status: "401: Token caducado",
-        message: "Inicia sesión para continuar-----------",
-      });
+      return res.status(401).send({ status: 401, message: "Token Caducado" });
     }
 
     connect.release();

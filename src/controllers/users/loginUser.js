@@ -55,9 +55,9 @@ const loginUser = async (req, res, next) => {
 
     jwt.verify(token, process.env.SECRET_TOKEN, (err, decodedToken) => {
       if (err) {
-        res.status(401).json({ error: "Token inválido o expirado" });
+        res.status(401).send({ status: 401, message: "Token Caducado" });
       } else {
-        const userData = decodedToken;
+        decodedToken;
 
         res.status(200).send({
           status: "OK",
