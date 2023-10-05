@@ -60,10 +60,10 @@ CREATE TABLE comments (
 );
 
 
-INSERT INTO users (email, name, username, password, role) VALUES ('lili@mail.com','lili', 'liliAdmin', SHA2(12345,512), 'admin');
+INSERT INTO users (email, name, username, password, role) VALUES ('lili@mail.com','lili', 'liliAdmin', SHA2(123456,512), 'admin');
 
-INSERT INTO users (email, name, username, password, role) VALUES ('esteban@mail.com','esteban', 'estebanAdmin', SHA2(12345,512), 'admin');
+INSERT INTO users (email, name, username, password, role) VALUES ('esteban@mail.com','esteban', 'estebanAdmin', SHA2(123456,512), 'admin');
 
-INSERT INTO users (email, name, username, password, role) VALUES ('david@mail.com','david', 'davidAdmin', SHA2(12345,512), 'admin');
+INSERT INTO users (email, name, username, password, role) VALUES ('david@mail.com','david', 'davidAdmin', SHA2(123456,512), 'admin');
 
-INSERT INTO users (email, name, username, password, role) VALUES ('cristopher@mail.com','cristopher', 'cristopherAdmin', SHA2(12345,512), 'admin');
+INSERT INTO users (email, name, username, password, role) VALUES ('cristopher@mail.com','cristopher', 'cristopherAdmin', SHA2(123456,512), 'admin');
