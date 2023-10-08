@@ -16,9 +16,7 @@ const entryRouter = require("../src/router/entryRouter");
 const seePhotoUsers = require("../src/controllers/entries/seePhotoUsers");
 
 const corsOptions = {
-  origin: "https://picshare-api.up.railway.app",
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  allowedHeaders: "Content-Type,Authorization",
+  origin: "https://picshare.up.railway.app",
 };
 
 server.use(cors(corsOptions));
