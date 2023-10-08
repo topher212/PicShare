@@ -16,7 +16,7 @@ const entryRouter = require("../src/router/entryRouter");
 const seePhotoUsers = require("../src/controllers/entries/seePhotoUsers");
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: "https://picshare-production.up.railway.app",
 };
 
 server.use(cors(corsOptions));
