@@ -1,5 +1,5 @@
 const mysql = require("mysql2/promise");
-const {PORT, USER, PASSWORD, HOST, DATABASE, PORT_DB} = require('../config');
+const {USER, PASSWORD, HOST, DATABASE, PORT_DB} = require('../config');
 require("dotenv").config();
 
 let pool;
