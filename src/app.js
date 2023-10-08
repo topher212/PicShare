@@ -38,6 +38,9 @@ server.use("/uploads/:folder/:userId", (req, res, next) => {
 
   express.static(userStaticDir)(req, res, next);
 });
+
+server.use("/resources", express.static(path.join(__dirname, "resources")));
+
 server.get("/", seePhotoUsers);
 
 server.use(userRouter);
