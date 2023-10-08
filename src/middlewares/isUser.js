@@ -1,5 +1,7 @@
 const getDB = require("../database/db");
 const jwt = require("jsonwebtoken");
+const {SECRET_TOKEN} = require('../config');
+
 
 const isUser = async (req, res, next) => {
   try {
@@ -16,7 +18,7 @@ const isUser = async (req, res, next) => {
     let tokenInfo;
 
     try {
-      tokenInfo = jwt.verify(authorization, process.env.SECRET_TOKEN);
+      tokenInfo = jwt.verify(authorization, SECRET_TOKEN);
     } catch (error) {
       return res.status(401).send({ status: 401, message: "Token Caducado" });
     }

@@ -1,7 +1,8 @@
 const path = require("path");
 const sharp = require("sharp"); //para imagenes
-
 const uuid = require("uuid");
+const {UPLOADS_DIRECTORY} = require('../config');
+
 
 const savePhoto = async (dataPhoto, dir) => {
   const img = sharp(dataPhoto.data).resize(600); //desbufferiza
@@ -12,7 +13,7 @@ const savePhoto = async (dataPhoto, dir) => {
 
   //guardamos archivo
   await img.toFile(
-    path.join(__dirname, process.env.UPLOADS_DIRECTORY + dir, photoNameUniq)
+    path.join(__dirname, UPLOADS_DIRECTORY + dir, photoNameUniq)
   );
   return photoNameUniq;
 };

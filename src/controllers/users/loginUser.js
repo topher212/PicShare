@@ -1,5 +1,6 @@
 const getDB = require("../../database/db");
 const jwt = require("jsonwebtoken");
+const {SECRET_TOKEN} = require('../../config');
 
 const loginUser = async (req, res, next) => {
   try {
@@ -40,7 +41,7 @@ const loginUser = async (req, res, next) => {
     //generar el token con el metodo sign el cual recibe como argumentos
     //un obj con la info (body o payload), palabra secreta (.env.SECRET_TOKEN)
     //un vencimiento 1d, 30m, 60m 10d 60d
-    const token = jwt.sign(info, process.env.SECRET_TOKEN, { expiresIn: "1d" });
+    const token = jwt.sign(info, SECRET_TOKEN, { expiresIn: "1d" });
 
     await connect.query(
       `
@@ -53,7 +54,7 @@ const loginUser = async (req, res, next) => {
 
     connect.release();
 
-    jwt.verify(token, process.env.SECRET_TOKEN, (err, decodedToken) => {
+    jwt.verify(token, SECRET_TOKEN, (err, decodedToken) => {
       if (err) {
         res.status(401).send({ status: 401, message: "Token Caducado" });
       } else {

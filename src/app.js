@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const fileupload = require("express-fileupload");
 const path = require("path");
 const cors = require("cors");
+const {UPLOADS_DIRECTORY} = require('./config');
 
 const server = express();
 
@@ -27,6 +28,8 @@ server.use(fileupload());
 
 // Configuración de archivos estáticos dinámicos
 const staticDir = path.join(__dirname, "uploads");
+server.use(express.static(staticDir));
+createStaticDir(staticDir);
 
 // Middleware para servir archivos estáticos desde carpetas dinámicas
 server.use("/uploads/:folder/:userId", (req, res, next) => {
