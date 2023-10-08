@@ -3,7 +3,7 @@ const morgan = require("morgan");
 const fileupload = require("express-fileupload");
 const path = require("path");
 const cors = require("cors");
-const {UPLOADS_DIRECTORY} = require('./config');
+const { UPLOADS_DIRECTORY } = require('./config');
 
 const server = express();
 
@@ -17,6 +17,8 @@ const seePhotoUsers = require("../src/controllers/entries/seePhotoUsers");
 
 const corsOptions = {
   origin: "https://picshare-api.up.railway.app",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: "Content-Type,Authorization",
 };
 
 server.use(cors(corsOptions));
